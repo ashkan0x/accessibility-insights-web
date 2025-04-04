@@ -1,0 +1,51 @@
+@import '../../../common/styles/colors.scss';
+@import '../../../common/styles/common.scss';
+@import '../../../common/styles/fonts.scss';
+
+.feedback-footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: var(--neutral-2, #f8f8f8);
+    min-height: 48px;
+    padding: 0 20px;
+    border-top: 0.5px solid var(--card-footer-border, #dedede);
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    margin-top: 0;
+  }
+    
+  .feedback-text {
+    font-size: 14px;
+    color: var(--secondary-text, rgba(0, 0, 0, 0.7));
+    margin-right: 12px;
+  }
+    
+  .feedback-buttons {
+    display: flex;
+    gap: 16px;
+    //padding-left: 16px;
+  }
+    
+  .feedback-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neutral-60, #666);
+    text-decoration: none;
+  }
+    
+  .feedback-button:hover {
+    background-color: var(--neutral-alpha-4, rgba(0, 0, 0, 0.04));
+  }
+    
+  .feedback-button span {
+    margin-left: 6px;
+    font-size: 14px;
+  }

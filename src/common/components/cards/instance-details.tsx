@@ -3,6 +3,7 @@
 import classNames from 'classnames';
 import { CardSelectionMessageCreator } from 'common/message-creators/card-selection-message-creator';
 import { NamedFC } from 'common/react/named-fc';
+import { FeedbackFooter } from './feedback-footer';
 import { CardResult } from 'common/types/store-data/card-view-model';
 import { NarrowModeStatus } from 'DetailsView/components/narrow-mode-detector';
 import { forOwn, isEmpty } from 'lodash';
@@ -119,6 +120,7 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
                         targetAppInfo={targetAppInfo}
                         narrowModeStatus={narrowModeStatus}
                     />
+                    <FeedbackFooter instanceId={result.uid} />
                 </div>
             </div>
         </div>
