@@ -53,6 +53,15 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
 
     const isHighlightSupported: boolean = deps.cardInteractionSupport.supportsHighlighting;
 
+    // Feedback is only enabled for AI scan results
+    const hasAiScanTag = () => {
+        if (!rule || !rule.guidance) return false;
+        
+        return rule.guidance.some(guidanceLink => 
+        guidanceLink.tags && guidanceLink.tags.some(tag => tag.id === 'AI_SCAN')
+        );
+    };
+
     const instanceDetailsCardStyling = classNames({
         [styles.instanceDetailsCard]: true,
         [styles.selected]: isHighlightSupported && result.isSelected,
@@ -120,7 +129,7 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
                         targetAppInfo={targetAppInfo}
                         narrowModeStatus={narrowModeStatus}
                     />
-                    <FeedbackFooter instanceId={result.uid} />
+                    {hasAiScanTag() && <FeedbackFooter instanceId={result.uid} />}
                 </div>
             </div>
         </div>
