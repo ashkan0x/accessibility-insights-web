@@ -5,12 +5,12 @@ import { ThumbsUpIcon } from 'common/icons/thumbs-up-icon';
 import { ThumbsDownIcon } from 'common/icons/thumbs-down-icon';
 
 // Creating CSS styles that will be extracted by the build system
-export const feedbackFooterStyles = {
+/* export const feedbackFooterStyles = {
   feedbackFooter: 'feedback-footer',
   feedbackText: 'feedback-text',
   feedbackButtons: 'feedback-buttons',
   feedbackButton: 'feedback-button'
-};
+}; */
 
 export interface FeedbackFooterProps {
     instanceId: string;
@@ -23,7 +23,8 @@ export const FeedbackFooter = NamedFC<FeedbackFooterProps>(
 
     // Build feedback URLs with the instance ID as a parameter
     const buildFeedbackUrl = (type: string) => {
-      return `https://example.com/feedback?type=${type}&element=${instanceId}`;
+      //return `https://example.com/feedback?type=${type}&element=${instanceId}`;
+      return ``; // TODO
     };
 
     return (
@@ -44,6 +45,7 @@ export const FeedbackFooter = NamedFC<FeedbackFooterProps>(
           >
             <ThumbsDownIcon />
           </a>
+          <span className={styles.aiContentLabel}>AI-generated content may be incorrect</span>
         </div>
       </div>
     );

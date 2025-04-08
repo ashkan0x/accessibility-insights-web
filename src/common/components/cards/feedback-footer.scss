@@ -23,7 +23,7 @@
     
   .feedback-buttons {
     display: flex;
-    gap: 16px;
+    gap: 8px;
     //padding-left: 16px;
   }
     
@@ -48,4 +48,15 @@
   .feedback-button span {
     margin-left: 6px;
     font-size: 14px;
+  }
+
+  .ai-content-label {
+    background-color: var(--neutral-10, #e6e6e6);
+    color: var(--neutral-60, #666);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
   }
