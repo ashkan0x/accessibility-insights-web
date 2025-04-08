@@ -37,6 +37,7 @@ export type InstanceDetailsProps = {
     rule: UnifiedRule;
     cardSelectionMessageCreator?: CardSelectionMessageCreator;
     narrowModeStatus?: NarrowModeStatus;
+    feedbackURL?: string;
 };
 
 export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', props => {
@@ -48,6 +49,7 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
         targetAppInfo,
         cardSelectionMessageCreator,
         narrowModeStatus,
+        feedbackURL
     } = props;
     const [cardFocused, setCardFocus] = React.useState(false);
 
@@ -129,7 +131,7 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
                         targetAppInfo={targetAppInfo}
                         narrowModeStatus={narrowModeStatus}
                     />
-                    {hasAiScanTag() && <FeedbackFooter instanceId={result.uid} />}
+                    {hasAiScanTag() && feedbackURL && <FeedbackFooter instanceId={result.uid} feedbackURL={feedbackURL}/>}
                 </div>
             </div>
         </div>

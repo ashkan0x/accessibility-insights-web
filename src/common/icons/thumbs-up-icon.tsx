@@ -16,6 +16,6 @@ export const ThumbsUpIcon = NamedFC('ThumbsUpIcon', () => (
         role="img"
         aria-hidden="true"
     >
-        <path d={d} fill="#212121" />
+        <path d={d} fill="#212121" transform="scale(2)"/>
     </svg>
 ));

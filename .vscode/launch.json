@@ -46,6 +46,20 @@
             "sourceMapPathOverrides": {
                 "webpack:///./*": "${workspaceFolder}/*"
             }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Report E2E Tests",
+            "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+            "args": [
+                "--runInBand",
+                "--config=${workspaceFolder}/packages/report-e2e-tests/jest.config.js",
+                "from-axe-result.test.ts"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "cwd": "${workspaceFolder}"
         }
     ],
     "inputs": [

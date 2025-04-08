@@ -14,17 +14,25 @@ import { ThumbsDownIcon } from 'common/icons/thumbs-down-icon';
 
 export interface FeedbackFooterProps {
     instanceId: string;
+    feedbackURL: string;
 }
 
 export const FeedbackFooter = NamedFC<FeedbackFooterProps>(
   'FeedbackFooter',
   props => {
-    const { instanceId } = props;
+    const { instanceId, feedbackURL } = props;
 
     // Build feedback URLs with the instance ID as a parameter
     const buildFeedbackUrl = (type: string) => {
-      //return `https://example.com/feedback?type=${type}&element=${instanceId}`;
-      return ``; // TODO
+      if (!feedbackURL) {
+        return '#'; // Return a safe fallback if feedbackURL is not provided
+      }
+      
+      // Ensure feedbackURL is properly formatted
+      const baseUrl = feedbackURL.endsWith('/') ? feedbackURL : `${feedbackURL}/`;
+      //return `${baseUrl}feedback?type=${type}&element=${instanceId}`;
+
+      return `${baseUrl}`;
     };
 
     return (

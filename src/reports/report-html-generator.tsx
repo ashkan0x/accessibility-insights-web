@@ -32,12 +32,14 @@ export class ReportHtmlGenerator {
         private readonly recommendColor: RecommendColor,
         private readonly getPropertyConfiguration: (id: string) => Readonly<PropertyConfiguration>,
         private readonly getNextHeadingLevel: (headingLevel: HeadingLevel) => HeadingLevel,
+        //private readonly feedbackURL: string,
     ) {}
 
     public generateHtml(
         description: string,
         cardsViewData: CardsViewModel,
         scanMetadata: ScanMetadata,
+        feedbackURL: string,
     ): string {
         const HeadSection = this.sectionFactory.HeadSection;
         const headMarkup: string = this.reactStaticRenderer.renderToStaticMarkup(<HeadSection />);
@@ -54,6 +56,7 @@ export class ReportHtmlGenerator {
                 cardsVisualizationModifierButtons: NullComponent,
                 LinkComponent: NewTabLink,
                 getNextHeadingLevel: this.getNextHeadingLevel,
+                feedbackURL: feedbackURL,
             } as SectionDeps,
             cardsViewData: cardsViewData,
             toUtcString: this.utcDateConverter,

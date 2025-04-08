@@ -16,6 +16,7 @@ declare namespace AccessibilityInsightsReport {
         description: string;
         serviceName: string;
         scanContext: ScanContext;
+        feedbackURL: string;
     }
 
     export type ScanSummaryDetails = {
