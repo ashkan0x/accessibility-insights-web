@@ -3,7 +3,7 @@
 import classNames from 'classnames';
 import { CardSelectionMessageCreator } from 'common/message-creators/card-selection-message-creator';
 import { NamedFC } from 'common/react/named-fc';
-import { FeedbackFooter } from './feedback-footer';
+import { FeedbackFooter } from './failed-instances-markup-footer';
 import { CardResult } from 'common/types/store-data/card-view-model';
 import { NarrowModeStatus } from 'DetailsView/components/narrow-mode-detector';
 import { forOwn, isEmpty } from 'lodash';
@@ -40,6 +40,9 @@ export type InstanceDetailsProps = {
     feedbackURL?: string;
 };
 
+// Feedback mechanism is only enabled for results with the following guidance tags
+const FEEDBACK_ENABLED_TAGS = ['BEST_PRACTICE'];
+
 export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', props => {
     const {
         result,
@@ -55,12 +58,11 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
 
     const isHighlightSupported: boolean = deps.cardInteractionSupport.supportsHighlighting;
 
-    // Feedback is only enabled for AI scan results
-    const hasAiScanTag = () => {
+    const hasFeedbackEnabledTag = () => {
         if (!rule || !rule.guidance) return false;
-        
-        return rule.guidance.some(guidanceLink => 
-        guidanceLink.tags && guidanceLink.tags.some(tag => tag.id === 'BEST_PRACTICE')
+
+        return rule.guidance.some(guidanceLink =>
+            guidanceLink.tags && guidanceLink.tags.some(tag => FEEDBACK_ENABLED_TAGS.includes(tag.id)),
         );
     };
 
@@ -134,7 +136,7 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
                     <FeedbackFooter 
                         instanceId={result.uid}
                         contentToCopy={buildCopyContent(result)} 
-                        feedbackURL={hasAiScanTag() ? feedbackURL : undefined}
+                        feedbackURL={hasFeedbackEnabledTag() ? feedbackURL : undefined}
                     />
                 </div>
             </div>

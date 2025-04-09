@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NamedFC } from 'common/react/named-fc';
-import styles from './feedback-footer.scss';
+import styles from './failed-instances-markup-footer.scss';
 import { ThumbsUpIcon } from 'common/icons/thumbs-up-icon';
 import { ThumbsDownIcon } from 'common/icons/thumbs-down-icon';
 import { CopyDetailsIcon } from 'common/icons/copy-details-icon';

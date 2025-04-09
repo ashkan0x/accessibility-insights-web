@@ -20,6 +20,7 @@ import {
     SectionDeps,
 } from './components/report-sections/report-section-factory';
 import { ReactStaticRenderer } from './react-static-renderer';
+import { getDefaultCopyToClipboardScript } from './components/report-sections/copy-to-clipboard-script-provider';
 
 export class CombinedReportHtmlGenerator {
     constructor(
@@ -70,6 +71,8 @@ export class CombinedReportHtmlGenerator {
         const bodyElement: JSX.Element = <ReportBody<CombinedReportSectionProps> {...props} />;
         const bodyMarkup: string = this.reactStaticRenderer.renderToStaticMarkup(bodyElement);
 
-        return '<!DOCTYPE html><html lang="en">' + headMarkup + bodyMarkup + '</html>';
+        const copyScript = getDefaultCopyToClipboardScript();
+
+        return '<!DOCTYPE html><html lang="en">' + headMarkup + bodyMarkup + '<script>' + copyScript + '</script>' + '</html>';
     }
 }
