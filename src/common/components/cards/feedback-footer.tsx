@@ -3,7 +3,7 @@ import { NamedFC } from 'common/react/named-fc';
 import styles from './feedback-footer.scss';
 import { ThumbsUpIcon } from 'common/icons/thumbs-up-icon';
 import { ThumbsDownIcon } from 'common/icons/thumbs-down-icon';
-import { CopyIcon } from 'common/icons/copy-icon';
+import { CopyDetailsIcon } from 'common/icons/copy-details-icon';
 
 export interface FeedbackFooterProps {
     instanceId: string;
@@ -74,24 +74,28 @@ export const FeedbackFooter = NamedFC<FeedbackFooterProps>(
             <div className={styles.feedbackGroupRight}>
                 <button 
                     id={copyButtonId}
-                    //className={styles.feedbackButton}
+                    className={styles.feedbackButton}
                     title="Copy content"
                     onClick={copyToClipboard}
                 >
-                    <CopyIcon />Copy Failure Details
+
+                    <CopyDetailsIcon />
+                    <span>Copy Failure Details</span>
                 </button>
                 {contentToCopy && (
                     <span id={copyContentId} style={{ display: 'none' }}>
                         {contentToCopy}
                     </span>
                 )}
-                <span 
-                    id={notificationId} 
-                    className={styles.copyNotification} 
-                    style={{ display: 'none' }}
-                >
-                    Copied!
-                </span>
+                <div className={styles.notificationContainer}>
+                    <span 
+                        id={notificationId} 
+                        className={styles.copyNotification} 
+                        style={{ display: 'none' }}
+                    >
+                        Copied!
+                    </span>
+                </div>
             </div>
         </div>
     );

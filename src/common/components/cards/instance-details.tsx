@@ -132,8 +132,8 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
                         narrowModeStatus={narrowModeStatus}
                     />
                     <FeedbackFooter 
-                        instanceId={result.descriptors.snippet}
-                        contentToCopy={result.descriptors.snippet} 
+                        instanceId={result.uid}
+                        contentToCopy={buildCopyContent(result)} 
                         feedbackURL={hasAiScanTag() ? feedbackURL : undefined}
                     />
                 </div>
@@ -141,6 +141,34 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
         </div>
     );
 });
+
+const buildCopyContent = (result: CardResult): string => {
+    const parts: string[] = [];
+    
+    // Add Snippet
+    if (result.descriptors?.snippet) {
+        parts.push(`Snippet: ${result.descriptors.snippet}`);
+    }
+    
+    // Add Path (could be in identifiers.target or similar field)
+    if (result.identifiers?.target) {
+        parts.push(`Path: ${result.identifiers.target}`);
+    }
+    
+    // Add Related Paths
+    if (result.descriptors?.relatedCssSelectors?.length) {
+        parts.push(`Related Paths:\n${result.descriptors.relatedCssSelectors.map(path => `- ${path}`).join('\n')}`);
+    }
+    
+    // Add How to fix
+    if (result.resolution?.howToFixSummary) {
+        parts.push(`How to fix:\n${result.resolution.howToFixSummary}`);
+    } else if (result.resolution?.failureSummary) {
+        parts.push(`How to fix:\n${result.resolution.failureSummary}`);
+    }
+    
+    return parts.join('\n\n');
+};
 
 const renderCardRowsForPropertyBag = (
     propertyBag: StoredInstancePropertyBag,
