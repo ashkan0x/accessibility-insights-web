@@ -60,7 +60,7 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
         if (!rule || !rule.guidance) return false;
         
         return rule.guidance.some(guidanceLink => 
-        guidanceLink.tags && guidanceLink.tags.some(tag => tag.id === 'AI_SCAN')
+        guidanceLink.tags && guidanceLink.tags.some(tag => tag.id === 'BEST_PRACTICE')
         );
     };
 
@@ -131,7 +131,11 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
                         targetAppInfo={targetAppInfo}
                         narrowModeStatus={narrowModeStatus}
                     />
-                    {hasAiScanTag() && feedbackURL && <FeedbackFooter instanceId={result.uid} feedbackURL={feedbackURL}/>}
+                    <FeedbackFooter 
+                        instanceId={result.descriptors.snippet}
+                        contentToCopy={result.descriptors.snippet} 
+                        feedbackURL={hasAiScanTag() ? feedbackURL : undefined}
+                    />
                 </div>
             </div>
         </div>

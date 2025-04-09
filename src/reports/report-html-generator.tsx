@@ -20,6 +20,7 @@ import {
     SectionProps,
 } from './components/report-sections/report-section-factory';
 import { ReactStaticRenderer } from './react-static-renderer';
+import { getDefaultCopyToClipboardScript } from './components/report-sections/copy-to-clipboard-script-provider';
 
 export class ReportHtmlGenerator {
     constructor(
@@ -32,7 +33,6 @@ export class ReportHtmlGenerator {
         private readonly recommendColor: RecommendColor,
         private readonly getPropertyConfiguration: (id: string) => Readonly<PropertyConfiguration>,
         private readonly getNextHeadingLevel: (headingLevel: HeadingLevel) => HeadingLevel,
-        //private readonly feedbackURL: string,
     ) {}
 
     public generateHtml(
@@ -76,6 +76,12 @@ export class ReportHtmlGenerator {
         const bodyElement: JSX.Element = <ReportBody {...props} />;
         const bodyMarkup: string = this.reactStaticRenderer.renderToStaticMarkup(bodyElement);
 
-        return '<!DOCTYPE html><html lang="en">' + headMarkup + bodyMarkup + '</html>';
+        const copyScript = getDefaultCopyToClipboardScript();
+
+        return '<!DOCTYPE html><html lang="en">' + 
+               headMarkup + 
+               bodyMarkup + 
+               '<script>' + copyScript + '</script>' + 
+               '</html>';
     }
 }

@@ -4,7 +4,7 @@
 
 .feedback-footer {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between; // Changed from flex-start
     align-items: center;
     background-color: var(--neutral-2, #f8f8f8);
     min-height: 48px;
@@ -25,6 +25,19 @@
     display: flex;
     gap: 8px;
     //padding-left: 16px;
+  }
+
+  .feedback-group-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .feedback-group-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
   }
     
   .feedback-button {
