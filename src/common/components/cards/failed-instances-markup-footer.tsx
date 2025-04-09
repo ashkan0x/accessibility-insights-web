@@ -7,6 +7,8 @@ import { CopyDetailsIcon } from 'common/icons/copy-details-icon';
 
 import { CardInteractionSupport } from './card-interaction-support';
 
+//declare function copyToClipboard(): void;
+
 export type FeedbackFooterDeps = {
     cardInteractionSupport: CardInteractionSupport;
 }
@@ -41,22 +43,6 @@ export const MarkupFooter = NamedFC<FeedbackFooterProps>(
     const copyContentId = `copy-content-${cleanInstanceId}`;
     const notificationId = `copy-notification-${cleanInstanceId}`;
 
-    // Function for interactive use in the app
-    const copyToClipboard = () => {
-      const textToCopy = contentToCopy || instanceId;
-      navigator.clipboard.writeText(textToCopy)
-        .then(() => {
-          const notification = document.getElementById(notificationId);
-          if (notification) {
-            notification.style.display = 'inline';
-            setTimeout(() => {
-              notification.style.display = 'none';
-            }, 2000);
-          }
-        })
-        .catch(err => console.error('Could not copy text: ', err));
-    };
-
     return (
         <div className={styles.feedbackFooter}>
             <div className={styles.feedbackGroupLeft}>
@@ -86,9 +72,7 @@ export const MarkupFooter = NamedFC<FeedbackFooterProps>(
                     id={copyButtonId}
                     className={styles.feedbackButton}
                     title="Copy content"
-                    onClick={copyToClipboard}
                 >
-
                     <CopyDetailsIcon />
                     <span>Copy Failure Details</span>
                 </button>
