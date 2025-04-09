@@ -3,7 +3,7 @@
 import classNames from 'classnames';
 import { CardSelectionMessageCreator } from 'common/message-creators/card-selection-message-creator';
 import { NamedFC } from 'common/react/named-fc';
-import { FeedbackFooter } from './failed-instances-markup-footer';
+import { MarkupFooter } from './failed-instances-markup-footer';
 import { CardResult } from 'common/types/store-data/card-view-model';
 import { NarrowModeStatus } from 'DetailsView/components/narrow-mode-detector';
 import { forOwn, isEmpty } from 'lodash';
@@ -57,6 +57,7 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
     const [cardFocused, setCardFocus] = React.useState(false);
 
     const isHighlightSupported: boolean = deps.cardInteractionSupport.supportsHighlighting;
+    const enableHTMLCopyButton: boolean = deps.cardInteractionSupport.supportsCopyFailureDetailsInMarkup ?? false;
 
     const hasFeedbackEnabledTag = () => {
         if (!rule || !rule.guidance) return false;
@@ -133,7 +134,8 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
                         targetAppInfo={targetAppInfo}
                         narrowModeStatus={narrowModeStatus}
                     />
-                    <FeedbackFooter 
+                    <MarkupFooter 
+                        deps={deps}
                         instanceId={result.uid}
                         contentToCopy={buildCopyContent(result)} 
                         feedbackURL={hasFeedbackEnabledTag() ? feedbackURL : undefined}

@@ -5,16 +5,26 @@ import { ThumbsUpIcon } from 'common/icons/thumbs-up-icon';
 import { ThumbsDownIcon } from 'common/icons/thumbs-down-icon';
 import { CopyDetailsIcon } from 'common/icons/copy-details-icon';
 
+import { CardInteractionSupport } from './card-interaction-support';
+
+export type FeedbackFooterDeps = {
+    cardInteractionSupport: CardInteractionSupport;
+}
 export interface FeedbackFooterProps {
+    deps: FeedbackFooterDeps;
     instanceId: string;
     feedbackURL?: string;
     contentToCopy?: string;
 }
 
-export const FeedbackFooter = NamedFC<FeedbackFooterProps>(
-  'FeedbackFooter',
+export const MarkupFooter = NamedFC<FeedbackFooterProps>(
+  'MarkupFooter',
   props => {
-    const { instanceId, feedbackURL, contentToCopy } = props;
+    const { deps, instanceId, feedbackURL, contentToCopy } = props;
+
+    if (!deps.cardInteractionSupport.supportsCopyFailureDetailsInMarkup) {
+        return null;
+    }
     
     // Build feedback URLs with the instance ID as a parameter
     const buildFeedbackUrl = (type: string) => {
