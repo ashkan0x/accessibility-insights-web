@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NamedFC } from 'common/react/named-fc';
 import styles from './failed-instances-markup-footer.scss';
 import { CardInteractionSupport } from './card-interaction-support';
-import { HelpfulButtons } from './helpful-buttons';
+import { FeedbackButtons } from './feedback-buttons';
 import { CopyContentButton } from './copy-content-button';
 
 export type FeedbackFooterDeps = {
@@ -28,7 +28,7 @@ export const MarkupFooter = NamedFC<FeedbackFooterProps>(
         return (
             <div className={styles.feedbackFooter}>
                 <div className={styles.feedbackGroupLeft}>
-                    {feedbackURL && <HelpfulButtons feedbackURL={feedbackURL} instanceId={instanceId} />}
+                    {feedbackURL && <FeedbackButtons feedbackURL={feedbackURL} instanceId={instanceId} />}
                 </div>
 
                 <div className={styles.feedbackGroupRight}>

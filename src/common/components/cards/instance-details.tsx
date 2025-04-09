@@ -41,7 +41,7 @@ export type InstanceDetailsProps = {
 };
 
 // Feedback mechanism is only enabled for results with the following guidance tags
-const FEEDBACK_ENABLED_TAGS = ['BEST_PRACTICE'];
+const FEEDBACK_ENABLED_TAGS = ['AI_SCAN'];
 
 export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', props => {
     const {

@@ -4,13 +4,13 @@ import styles from './failed-instances-markup-footer.scss';
 import { ThumbsUpIcon } from 'common/icons/thumbs-up-icon';
 import { ThumbsDownIcon } from 'common/icons/thumbs-down-icon';
 
-export interface HelpfulButtonsProps {
+export interface FeedbackButtonsProps {
     feedbackURL: string;
     instanceId: string;
 }
 
-export const HelpfulButtons = NamedFC<HelpfulButtonsProps>(
-    'HelpfulButtons',
+export const FeedbackButtons = NamedFC<FeedbackButtonsProps>(
+    'FeedbackButtons',
     ({ feedbackURL, instanceId }) => {
         const buildFeedbackUrl = (type: string) => {
             const baseUrl = feedbackURL.endsWith('/') ? feedbackURL : `${feedbackURL}/`;
