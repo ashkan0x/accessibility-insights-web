@@ -2,27 +2,18 @@
 // Licensed under the MIT License.
 
 export const addCopyToClipboardListener = function (doc: Document): void {
-    // This function will be called when the static HTML is loaded
-    const copyToClipboard = function(instanceId: string): void {
-        // Find content element if it exists
+    const copyToClipboard = async function(instanceId: string): Promise<void> {
         const contentId = `copy-content-${instanceId.replace(/[^a-zA-Z0-9]/g, '')}`;
         const contentElement = doc.getElementById(contentId);
         const textToCopy = contentElement ? contentElement.textContent || '' : instanceId;
-        
-        // Create temporary textarea for copying
-        const textarea = doc.createElement('textarea');
-        textarea.value = textToCopy;
-        textarea.setAttribute('readonly', '');
-        textarea.style.position = 'absolute';
-        textarea.style.left = '-9999px';
-        doc.body.appendChild(textarea);
-        
-        // Copy content
-        textarea.select();
-        doc.execCommand('copy');
-        doc.body.removeChild(textarea);
-        
-        // Show notification if it exists
+
+        try {
+            await navigator.clipboard.writeText(textToCopy);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+            return;
+        }
+
         const notificationId = `copy-notification-${instanceId.replace(/[^a-zA-Z0-9]/g, '')}`;
         const notificationElement = doc.getElementById(notificationId);
         if (notificationElement) {
@@ -33,15 +24,14 @@ export const addCopyToClipboardListener = function (doc: Document): void {
         }
     };
 
-    // Add click handlers to all copy buttons
     const copyButtons = doc.querySelectorAll('button[id^="copy-button-"]');
     for (let i = 0; i < copyButtons.length; i++) {
         const button = copyButtons[i];
         const buttonId = button.id;
         const instanceId = buttonId.replace('copy-button-', '');
-        
+
         button.addEventListener('click', function(): void {
-            copyToClipboard(instanceId);
+            void copyToClipboard(instanceId);
         });
     }
 };

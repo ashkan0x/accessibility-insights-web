@@ -96,6 +96,14 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     white-space: nowrap;
     z-index: 100;
+    display: none;
+    &.visible {
+      display: inline-block;
+    }
+  }
+
+  .hidden-content {
+    display: none;
   }
 
   @keyframes fadeInOut {

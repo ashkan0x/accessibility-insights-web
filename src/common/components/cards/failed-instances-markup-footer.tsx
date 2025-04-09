@@ -1,17 +1,14 @@
 import * as React from 'react';
 import { NamedFC } from 'common/react/named-fc';
 import styles from './failed-instances-markup-footer.scss';
-import { ThumbsUpIcon } from 'common/icons/thumbs-up-icon';
-import { ThumbsDownIcon } from 'common/icons/thumbs-down-icon';
-import { CopyDetailsIcon } from 'common/icons/copy-details-icon';
-
 import { CardInteractionSupport } from './card-interaction-support';
-
-//declare function copyToClipboard(): void;
+import { HelpfulButtons } from './helpful-buttons';
+import { CopyContentButton } from './copy-content-button';
 
 export type FeedbackFooterDeps = {
     cardInteractionSupport: CardInteractionSupport;
-}
+};
+
 export interface FeedbackFooterProps {
     deps: FeedbackFooterDeps;
     instanceId: string;
@@ -20,78 +17,24 @@ export interface FeedbackFooterProps {
 }
 
 export const MarkupFooter = NamedFC<FeedbackFooterProps>(
-  'MarkupFooter',
-  props => {
-    const { deps, instanceId, feedbackURL, contentToCopy } = props;
+    'MarkupFooter',
+    props => {
+        const { deps, instanceId, feedbackURL, contentToCopy } = props;
 
-    if (!deps.cardInteractionSupport.supportsCopyFailureDetailsInMarkup) {
-        return null;
-    }
-    
-    // Build feedback URLs with the instance ID as a parameter
-    const buildFeedbackUrl = (type: string) => {
-      if (!feedbackURL) {
-        return '#';
-      }
-      
-      const baseUrl = feedbackURL.endsWith('/') ? feedbackURL : `${feedbackURL}/`;
-      return `${baseUrl}?feedback=${type}&instanceId=${encodeURIComponent(instanceId)}`;
-    };
+        if (!deps.cardInteractionSupport.supportsCopyFailureDetailsInMarkup) {
+            return null;
+        }
 
-    const cleanInstanceId = instanceId.replace(/[^a-zA-Z0-9]/g, '');
-    const copyButtonId = `copy-button-${cleanInstanceId}`;
-    const copyContentId = `copy-content-${cleanInstanceId}`;
-    const notificationId = `copy-notification-${cleanInstanceId}`;
+        return (
+            <div className={styles.feedbackFooter}>
+                <div className={styles.feedbackGroupLeft}>
+                    {feedbackURL && <HelpfulButtons feedbackURL={feedbackURL} instanceId={instanceId} />}
+                </div>
 
-    return (
-        <div className={styles.feedbackFooter}>
-            <div className={styles.feedbackGroupLeft}>
-                {feedbackURL && (
-                    <>
-                        <a 
-                            href={buildFeedbackUrl('helpful')} 
-                            className={styles.feedbackButton} 
-                            title="Helpful"
-                        >
-                            <ThumbsUpIcon />
-                        </a>
-                        <a 
-                            href={buildFeedbackUrl('unhelpful')} 
-                            className={styles.feedbackButton} 
-                            title="Unhelpful"
-                        >
-                            <ThumbsDownIcon />
-                        </a>
-                        <span className={styles.aiContentLabel}>AI-generated content may be incorrect</span>
-                    </>
-                )}
-            </div>
-            
-            <div className={styles.feedbackGroupRight}>
-                <button 
-                    id={copyButtonId}
-                    className={styles.feedbackButton}
-                    title="Copy content"
-                >
-                    <CopyDetailsIcon />
-                    <span>Copy Failure Details</span>
-                </button>
-                {contentToCopy && (
-                    <span id={copyContentId} style={{ display: 'none' }}>
-                        {contentToCopy}
-                    </span>
-                )}
-                <div className={styles.notificationContainer}>
-                    <span 
-                        id={notificationId} 
-                        className={styles.copyNotification} 
-                        style={{ display: 'none' }}
-                    >
-                        Copied failure details!
-                    </span>
+                <div className={styles.feedbackGroupRight}>
+                    <CopyContentButton instanceId={instanceId} contentToCopy={contentToCopy} />
                 </div>
             </div>
-        </div>
-    );
-  }
+        );
+    },
 );
