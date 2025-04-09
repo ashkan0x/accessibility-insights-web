@@ -23,7 +23,7 @@ export const FeedbackFooter = NamedFC<FeedbackFooterProps>(
       }
       
       const baseUrl = feedbackURL.endsWith('/') ? feedbackURL : `${feedbackURL}/`;
-      return `${baseUrl}/${instanceId}/feedback?type=${type}`;
+      return `${baseUrl}?feedback=${type}&instanceId=${encodeURIComponent(instanceId)}`;
     };
 
     const cleanInstanceId = instanceId.replace(/[^a-zA-Z0-9]/g, '');
@@ -53,14 +53,14 @@ export const FeedbackFooter = NamedFC<FeedbackFooterProps>(
                 {feedbackURL && (
                     <>
                         <a 
-                            href={buildFeedbackUrl('thumbsup')} 
+                            href={buildFeedbackUrl('helpful')} 
                             className={styles.feedbackButton} 
                             title="Helpful"
                         >
                             <ThumbsUpIcon />
                         </a>
                         <a 
-                            href={buildFeedbackUrl('thumbsdown')} 
+                            href={buildFeedbackUrl('unhelpful')} 
                             className={styles.feedbackButton} 
                             title="Unhelpful"
                         >
@@ -93,7 +93,7 @@ export const FeedbackFooter = NamedFC<FeedbackFooterProps>(
                         className={styles.copyNotification} 
                         style={{ display: 'none' }}
                     >
-                        Copied!
+                        Copied failure details!
                     </span>
                 </div>
             </div>
