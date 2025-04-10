@@ -39,7 +39,7 @@ export class ReportHtmlGenerator {
         description: string,
         cardsViewData: CardsViewModel,
         scanMetadata: ScanMetadata,
-        feedbackURL: string,
+        feedbackURL?: string,
     ): string {
         const HeadSection = this.sectionFactory.HeadSection;
         const headMarkup: string = this.reactStaticRenderer.renderToStaticMarkup(<HeadSection />);
@@ -56,7 +56,7 @@ export class ReportHtmlGenerator {
                 cardsVisualizationModifierButtons: NullComponent,
                 LinkComponent: NewTabLink,
                 getNextHeadingLevel: this.getNextHeadingLevel,
-                feedbackURL: feedbackURL,
+                feedbackURL: feedbackURL || undefined,
             } as SectionDeps,
             cardsViewData: cardsViewData,
             toUtcString: this.utcDateConverter,

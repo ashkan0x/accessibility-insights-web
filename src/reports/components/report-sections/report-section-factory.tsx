@@ -32,7 +32,7 @@ export type SectionProps = {
     shouldAlertFailuresCount?: boolean;
     scanMetadata: ScanMetadata;
     sectionHeadingLevel: HeadingLevel;
-    feedbackURL: string,
+    feedbackURL?: string;
 };
 
 export const ResultSectionTypes = {

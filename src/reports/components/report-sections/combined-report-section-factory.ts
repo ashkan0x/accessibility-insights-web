@@ -33,6 +33,7 @@ export type CombinedReportSectionProps = BaseSummaryReportSectionProps &
         cardsViewData: CardsViewModel;
         urlResultCounts: UrlResultCounts;
         sectionHeadingLevel: HeadingLevel;
+        feedbackURL?: string;
     };
 
 export const CombinedReportSectionFactory: ReportSectionFactory<CombinedReportSectionProps> = {

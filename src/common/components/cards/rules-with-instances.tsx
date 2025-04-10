@@ -23,7 +23,7 @@ export const ruleGroupAutomationId = 'cards-rule-group';
 export type RulesWithInstancesDeps = RuleContentDeps &
     CollapsibleComponentCardsDeps & {
         collapsibleControl: (props: CollapsibleComponentCardsProps) => JSX.Element;
-        feedbackURL: string;
+        feedbackURL?: string;
     };
 
 export type RulesWithInstancesProps = {
@@ -79,7 +79,7 @@ export const RulesWithInstances = NamedFC<RulesWithInstancesProps>(
                         targetAppInfo={targetAppInfo}
                         cardSelectionMessageCreator={cardSelectionMessageCreator}
                         narrowModeStatus={narrowModeStatus}
-                        feedbackURL={deps.feedbackURL}
+                        feedbackURL={deps.feedbackURL || undefined}
                     />
                 ),
                 containerAutomationId: ruleGroupAutomationId,

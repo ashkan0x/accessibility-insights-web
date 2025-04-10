@@ -39,6 +39,7 @@ export class CombinedReportHtmlGenerator {
         scanMetadata: ScanMetadata,
         cardsByRule: CardsViewModel,
         urlResultCounts: UrlResultCounts,
+        feedbackURL?: string,
     ): string {
         const HeadSection = this.sectionFactory.HeadSection;
         const headMarkup: string = this.reactStaticRenderer.renderToStaticMarkup(<HeadSection />);
@@ -54,6 +55,7 @@ export class CombinedReportHtmlGenerator {
                 cardInteractionSupport: limitedCardInteractionsSupported,
                 cardsVisualizationModifierButtons: NullComponent,
                 LinkComponent: NewTabLinkWithConfirmationDialog,
+                feedbackURL: feedbackURL || undefined,
             } as SectionDeps,
             cardsViewData: cardsByRule,
             urlResultCounts,

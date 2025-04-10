@@ -19,7 +19,7 @@ export const FailedInstancesSection = NamedFC<CommonInstancesSectionProps>(
         cardSelectionMessageCreator,
         sectionHeadingLevel,
         narrowModeStatus,
-        feedbackURL,
+        //feedbackURL,
     }) => {
         if (cardsViewData == null || cardsViewData.cards == null) {
             return null;
@@ -46,7 +46,7 @@ export const FailedInstancesSection = NamedFC<CommonInstancesSectionProps>(
                 sectionHeadingLevel={sectionHeadingLevel}
                 cardSelectionMessageCreator={cardSelectionMessageCreator}
                 narrowModeStatus={narrowModeStatus}
-                feedbackURL={feedbackURL}
+                //feedbackURL={feedbackURL}
             />
         );
     },

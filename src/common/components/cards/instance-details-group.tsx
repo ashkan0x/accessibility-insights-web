@@ -68,7 +68,7 @@ export const InstanceDetailsGroup = NamedFC<InstanceDetailsGroupProps>(
                             targetAppInfo={targetAppInfo}
                             cardSelectionMessageCreator={cardSelectionMessageCreator}
                             narrowModeStatus={narrowModeStatus}
-                            feedbackURL={feedbackURL}
+                            {...(feedbackURL && { feedbackURL })}
                         />
                     </li>
                 ))}
