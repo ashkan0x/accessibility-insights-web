@@ -22,7 +22,6 @@ export const MarkupFooter = NamedFC<MarkupFooterProps>(
         const { deps, instanceId, feedbackURL, contentToCopy } = props;
         const supportsCopy = deps.cardInteractionSupport.supportsCopyFailureDetailsInMarkup;
 
-        // Return null early if both conditions fail
         if (!feedbackURL && !supportsCopy) {
             return null;
         }
