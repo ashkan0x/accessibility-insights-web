@@ -22,7 +22,6 @@ import { UserConfigurationStoreData } from '../../types/store-data/user-configur
 import { MarkupFooter } from './failed-instances-markup-footer';
 import { InstanceDetailsFooter, InstanceDetailsFooterDeps } from './instance-details-footer';
 
-
 export const instanceCardAutomationId = 'instance-card';
 
 export type InstanceDetailsDeps = {
@@ -43,7 +42,8 @@ export type InstanceDetailsProps = {
 };
 
 // Feedback mechanism is only enabled for results with the following guidance tags
-const FEEDBACK_ENABLED_TAGS = ['AI_SCAN'];
+const AI_SCAN_TAG = 'AI_SCAN';
+const FEEDBACK_ENABLED_TAGS = [AI_SCAN_TAG];
 
 export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', props => {
     const {
@@ -65,6 +65,15 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
 
         return rule.guidance.some(guidanceLink =>
             guidanceLink.tags && guidanceLink.tags.some(tag => FEEDBACK_ENABLED_TAGS.includes(tag.id)),
+        );
+    };
+
+    // Add specific check for AI_SCAN tag
+    const hasAIScanTag = () => {
+        if (!rule || !rule.guidance) return false;
+        
+        return rule.guidance.some(guidanceLink =>
+            guidanceLink.tags && guidanceLink.tags.some(tag => tag.id === AI_SCAN_TAG)
         );
     };
 
@@ -140,6 +149,7 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
                         instanceId={result.uid}
                         contentToCopy={buildCopyContent(result)} 
                         feedbackURL={hasFeedbackEnabledTag() ? feedbackURL : undefined}
+                        isIssueAIdetected={hasAIScanTag()}
                     />
                 </div>
             </div>

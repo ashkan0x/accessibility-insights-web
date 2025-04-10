@@ -14,12 +14,13 @@ export interface MarkupFooterProps {
     instanceId: string;
     feedbackURL?: string;
     contentToCopy?: string;
+    isIssueAIdetected?: boolean;
 }
 
 export const MarkupFooter = NamedFC<MarkupFooterProps>(
     'MarkupFooter',
     props => {
-        const { deps, instanceId, feedbackURL, contentToCopy } = props;
+        const { deps, instanceId, feedbackURL, contentToCopy, isIssueAIdetected } = props;
         const supportsCopy = deps.cardInteractionSupport.supportsCopyFailureDetailsInMarkup;
 
         if (!feedbackURL && !supportsCopy) {
@@ -30,7 +31,11 @@ export const MarkupFooter = NamedFC<MarkupFooterProps>(
             <div className={styles.markupFooter}>
                 {feedbackURL && (
                     <div className={styles.buttonsGroupLeft}>
-                        <FeedbackButtons feedbackURL={feedbackURL} instanceId={instanceId} />
+                        <FeedbackButtons 
+                            feedbackURL={feedbackURL} 
+                            instanceId={instanceId} 
+                            isIssueAIdetected={isIssueAIdetected}
+                        />
                     </div>
                 )}
 

@@ -7,11 +7,12 @@ import styles from './failed-instances-markup-footer.scss';
 export interface FeedbackButtonsProps {
     feedbackURL: string;
     instanceId: string;
+    isIssueAIdetected?: boolean;
 }
 
 export const FeedbackButtons = NamedFC<FeedbackButtonsProps>(
     'FeedbackButtons',
-    ({ feedbackURL, instanceId }) => {
+    ({ feedbackURL, instanceId, isIssueAIdetected = false }) => {
         const buildFeedbackUrl = (type: string) => {
             const baseUrl = feedbackURL.endsWith('/') ? feedbackURL : `${feedbackURL}/`;
             return `${baseUrl}?feedback=${type}&instanceId=${encodeURIComponent(instanceId)}`;
@@ -25,7 +26,9 @@ export const FeedbackButtons = NamedFC<FeedbackButtonsProps>(
                 <a href={buildFeedbackUrl('unhelpful')} className={styles.feedbackButton} title="Unhelpful">
                     <ThumbsDownIcon />
                 </a>
-                <span className={styles.aiContentLabel}>AI-generated content may be incorrect</span>
+                {isIssueAIdetected && (
+                    <span className={styles.aiContentLabel}>AI-generated content may be incorrect</span>
+                )}
             </>
         );
     },
