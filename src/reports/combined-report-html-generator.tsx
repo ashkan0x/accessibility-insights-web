@@ -15,12 +15,12 @@ import { ReportBody, ReportBodyProps } from 'reports/components/report-sections/
 import { ReportCollapsibleContainerControl } from 'reports/components/report-sections/report-collapsible-container';
 import { UrlResultCounts } from 'reports/package/accessibilityInsightsReport';
 import { CombinedReportSectionProps } from './components/report-sections/combined-report-section-factory';
+import { getDefaultCopyToClipboardScript } from './components/report-sections/copy-to-clipboard-script-provider';
 import {
     ReportSectionFactory,
     SectionDeps,
 } from './components/report-sections/report-section-factory';
 import { ReactStaticRenderer } from './react-static-renderer';
-import { getDefaultCopyToClipboardScript } from './components/report-sections/copy-to-clipboard-script-provider';
 
 export class CombinedReportHtmlGenerator {
     constructor(
@@ -62,6 +62,7 @@ export class CombinedReportHtmlGenerator {
             toUtcString: this.utcDateConverter,
             secondsToTimeString: this.secondsToTimeStringConverter,
             getCollapsibleScript: this.getCollapsibleScript,
+            getCopyToClipboardScript: getDefaultCopyToClipboardScript,
             sectionHeadingLevel: 2,
         };
 
@@ -73,8 +74,6 @@ export class CombinedReportHtmlGenerator {
         const bodyElement: JSX.Element = <ReportBody<CombinedReportSectionProps> {...props} />;
         const bodyMarkup: string = this.reactStaticRenderer.renderToStaticMarkup(bodyElement);
 
-        const copyScript = getDefaultCopyToClipboardScript();
-
-        return '<!DOCTYPE html><html lang="en">' + headMarkup + bodyMarkup + '<script>' + copyScript + '</script>' + '</html>';
+        return '<!DOCTYPE html><html lang="en">' + headMarkup + bodyMarkup + '</html>';
     }
 }

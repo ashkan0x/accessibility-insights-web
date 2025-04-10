@@ -149,14 +149,21 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
 const buildCopyContent = (result: CardResult): string => {
     const parts: string[] = [];
     
+    // Add Rule ID
+    parts.push(`Rule ID: ${result.ruleId}`);
+
+    // Add Path (could be in identifiers.target, identifiers.identifier, or identifiers.conciseName)
+    if (result.identifiers?.target) {
+        parts.push(`Path: ${result.identifiers.target}`);
+    } else if (result.identifiers?.identifier) {
+        parts.push(`Path: ${result.identifiers.identifier}`);
+    } else if (result.identifiers?.conciseName) {
+        parts.push(`Path: ${result.identifiers.conciseName}`);
+    }
+    
     // Add Snippet
     if (result.descriptors?.snippet) {
         parts.push(`Snippet: ${result.descriptors.snippet}`);
-    }
-    
-    // Add Path (could be in identifiers.target or similar field)
-    if (result.identifiers?.target) {
-        parts.push(`Path: ${result.identifiers.target}`);
     }
     
     // Add Related Paths
@@ -164,9 +171,23 @@ const buildCopyContent = (result: CardResult): string => {
         parts.push(`Related Paths:\n${result.descriptors.relatedCssSelectors.map(path => `- ${path}`).join('\n')}`);
     }
     
+    // Add URLs
+    if (result.identifiers?.urls?.urlInfos?.length) {
+        parts.push(`URLs:\n${result.identifiers.urls.urlInfos.map(urlInfo => `- ${urlInfo.url}`).join('\n')}`);
+    }
+    
     // Add How to fix
-    if (result.resolution?.howToFixSummary) {
+    if (result.resolution && 'howToFixSummary' in result.resolution) {
         parts.push(`How to fix:\n${result.resolution.howToFixSummary}`);
+    } else if (result.resolution && 'how-to-fix-web' in result.resolution) {
+        const howToFixWeb = result.resolution['how-to-fix-web'] as any;
+        if (howToFixWeb.all && howToFixWeb.all.length > 0) {
+            const fixes = howToFixWeb.all.map((item: string) => `- ${item}`).join('\n');
+            parts.push(`How to fix:\nFix ALL of the following issues\n${fixes}`);
+        } else if (howToFixWeb.any && howToFixWeb.any.length > 0) {
+            const fixes = howToFixWeb.any.map((item: string) => `- ${item}`).join('\n');
+            parts.push(`How to fix:\nFix ONE of the following issues\n${fixes}`);
+        }
     } else if (result.resolution?.failureSummary) {
         parts.push(`How to fix:\n${result.resolution.failureSummary}`);
     }

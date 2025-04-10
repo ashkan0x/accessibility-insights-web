@@ -12,6 +12,7 @@ import { CardsViewModel } from 'common/types/store-data/card-view-model';
 import { ScanMetadata } from 'common/types/store-data/unified-data-interface';
 import * as React from 'react';
 
+import { getDefaultCopyToClipboardScript } from './components/report-sections/copy-to-clipboard-script-provider';
 import { ReportBody, ReportBodyProps } from './components/report-sections/report-body';
 import { ReportCollapsibleContainerControl } from './components/report-sections/report-collapsible-container';
 import {
@@ -20,7 +21,6 @@ import {
     SectionProps,
 } from './components/report-sections/report-section-factory';
 import { ReactStaticRenderer } from './react-static-renderer';
-import { getDefaultCopyToClipboardScript } from './components/report-sections/copy-to-clipboard-script-provider';
 
 export class ReportHtmlGenerator {
     constructor(
@@ -61,6 +61,7 @@ export class ReportHtmlGenerator {
             cardsViewData: cardsViewData,
             toUtcString: this.utcDateConverter,
             getCollapsibleScript: this.getCollapsibleScript,
+            getCopyToClipboardScript: getDefaultCopyToClipboardScript,
             getGuidanceTagsFromGuidanceLinks: this.getGuidanceTagsFromGuidanceLinks,
             fixInstructionProcessor: this.fixInstructionProcessor,
             recommendColor: this.recommendColor,
@@ -76,12 +77,6 @@ export class ReportHtmlGenerator {
         const bodyElement: JSX.Element = <ReportBody {...props} />;
         const bodyMarkup: string = this.reactStaticRenderer.renderToStaticMarkup(bodyElement);
 
-        const copyScript = getDefaultCopyToClipboardScript();
-
-        return '<!DOCTYPE html><html lang="en">' + 
-               headMarkup + 
-               bodyMarkup + 
-               '<script>' + copyScript + '</script>' + 
-               '</html>';
+        return '<!DOCTYPE html><html lang="en">' + headMarkup + bodyMarkup + '</html>';
     }
 }
