@@ -1,18 +1,8 @@
-import * as React from 'react';
-import { NamedFC } from 'common/react/named-fc';
-import styles from './failed-instances-markup-footer.scss';
 import { CopyDetailsIcon } from 'common/icons/copy-details-icon';
+import { NamedFC } from 'common/react/named-fc';
+import * as React from 'react';
+import styles from './failed-instances-markup-footer.scss';
 
-/**
- * This component provides the DOM structure for the copy functionality.
- * The actual copy behavior is implemented in an external script that gets
- * included in the final HTML.
- * 
- * The external script will:
- * 1. Attach an event handler to the button with ID pattern: copy-button-[cleanInstanceId]
- * 2. Copy text from the element with ID pattern: copy-content-[cleanInstanceId]
- * 3. Display the notification with ID pattern: copy-notification-[cleanInstanceId]
- */
 export interface CopyContentButtonProps {
     instanceId: string;
     contentToCopy?: string;

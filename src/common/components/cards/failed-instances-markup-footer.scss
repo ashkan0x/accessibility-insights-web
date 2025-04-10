@@ -2,7 +2,7 @@
 @import '../../../common/styles/common.scss';
 @import '../../../common/styles/fonts.scss';
 
-.feedback-footer {
+.markup-footer {
     display: flex;
     justify-content: space-between; // Changed from flex-start
     align-items: center;
@@ -24,21 +24,21 @@
   .feedback-buttons {
     display: flex;
     gap: 8px;
-    //padding-left: 16px;
   }
 
-  .feedback-group-left {
+  .buttons-group-left {
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
-  .feedback-group-right {
+  .buttons-group-right {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 12px;
     position: relative;
+    margin-left: auto
   }
     
   .feedback-button {
@@ -112,7 +112,3 @@
     80% { opacity: 1; transform: translateY(0); }
     100% { opacity: 0; transform: translateY(-10px); }
   }
-
-  .icon-fill-override svg {
-    fill: currentColor;
-}

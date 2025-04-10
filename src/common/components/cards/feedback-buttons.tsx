@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { NamedFC } from 'common/react/named-fc';
-import styles from './failed-instances-markup-footer.scss';
-import { ThumbsUpIcon } from 'common/icons/thumbs-up-icon';
 import { ThumbsDownIcon } from 'common/icons/thumbs-down-icon';
+import { ThumbsUpIcon } from 'common/icons/thumbs-up-icon';
+import { NamedFC } from 'common/react/named-fc';
+import * as React from 'react';
+import styles from './failed-instances-markup-footer.scss';
 
 export interface FeedbackButtonsProps {
     feedbackURL: string;

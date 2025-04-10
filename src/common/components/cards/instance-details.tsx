@@ -3,8 +3,8 @@
 import classNames from 'classnames';
 import { CardSelectionMessageCreator } from 'common/message-creators/card-selection-message-creator';
 import { NamedFC } from 'common/react/named-fc';
-import { MarkupFooter } from './failed-instances-markup-footer';
 import { CardResult } from 'common/types/store-data/card-view-model';
+import { buildCopyContent } from 'common/utils/card-content-formatter';
 import { NarrowModeStatus } from 'DetailsView/components/narrow-mode-detector';
 import { forOwn, isEmpty } from 'lodash';
 import * as React from 'react';
@@ -19,7 +19,9 @@ import {
     UnifiedRule,
 } from '../../../common/types/store-data/unified-data-interface';
 import { UserConfigurationStoreData } from '../../types/store-data/user-configuration-store';
+import { MarkupFooter } from './failed-instances-markup-footer';
 import { InstanceDetailsFooter, InstanceDetailsFooterDeps } from './instance-details-footer';
+
 
 export const instanceCardAutomationId = 'instance-card';
 
@@ -41,7 +43,7 @@ export type InstanceDetailsProps = {
 };
 
 // Feedback mechanism is only enabled for results with the following guidance tags
-const FEEDBACK_ENABLED_TAGS = ['AI_SCAN'];
+const FEEDBACK_ENABLED_TAGS = ['BEST_PRACTICE'];
 
 export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', props => {
     const {
@@ -57,7 +59,6 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
     const [cardFocused, setCardFocus] = React.useState(false);
 
     const isHighlightSupported: boolean = deps.cardInteractionSupport.supportsHighlighting;
-    const enableHTMLCopyButton: boolean = deps.cardInteractionSupport.supportsCopyFailureDetailsInMarkup ?? false;
 
     const hasFeedbackEnabledTag = () => {
         if (!rule || !rule.guidance) return false;
@@ -145,55 +146,6 @@ export const InstanceDetails = NamedFC<InstanceDetailsProps>('InstanceDetails', 
         </div>
     );
 });
-
-const buildCopyContent = (result: CardResult): string => {
-    const parts: string[] = [];
-    
-    // Add Rule ID
-    parts.push(`Rule ID: ${result.ruleId}`);
-
-    // Add Path (could be in identifiers.target, identifiers.identifier, or identifiers.conciseName)
-    if (result.identifiers?.target) {
-        parts.push(`Path: ${result.identifiers.target}`);
-    } else if (result.identifiers?.identifier) {
-        parts.push(`Path: ${result.identifiers.identifier}`);
-    } else if (result.identifiers?.conciseName) {
-        parts.push(`Path: ${result.identifiers.conciseName}`);
-    }
-    
-    // Add Snippet
-    if (result.descriptors?.snippet) {
-        parts.push(`Snippet: ${result.descriptors.snippet}`);
-    }
-    
-    // Add Related Paths
-    if (result.descriptors?.relatedCssSelectors?.length) {
-        parts.push(`Related Paths:\n${result.descriptors.relatedCssSelectors.map(path => `- ${path}`).join('\n')}`);
-    }
-    
-    // Add URLs
-    if (result.identifiers?.urls?.urlInfos?.length) {
-        parts.push(`URLs:\n${result.identifiers.urls.urlInfos.map(urlInfo => `- ${urlInfo.url}`).join('\n')}`);
-    }
-    
-    // Add How to fix
-    if (result.resolution && 'howToFixSummary' in result.resolution) {
-        parts.push(`How to fix:\n${result.resolution.howToFixSummary}`);
-    } else if (result.resolution && 'how-to-fix-web' in result.resolution) {
-        const howToFixWeb = result.resolution['how-to-fix-web'] as any;
-        if (howToFixWeb.all && howToFixWeb.all.length > 0) {
-            const fixes = howToFixWeb.all.map((item: string) => `- ${item}`).join('\n');
-            parts.push(`How to fix:\nFix ALL of the following issues\n${fixes}`);
-        } else if (howToFixWeb.any && howToFixWeb.any.length > 0) {
-            const fixes = howToFixWeb.any.map((item: string) => `- ${item}`).join('\n');
-            parts.push(`How to fix:\nFix ONE of the following issues\n${fixes}`);
-        }
-    } else if (result.resolution?.failureSummary) {
-        parts.push(`How to fix:\n${result.resolution.failureSummary}`);
-    }
-    
-    return parts.join('\n\n');
-};
 
 const renderCardRowsForPropertyBag = (
     propertyBag: StoredInstancePropertyBag,

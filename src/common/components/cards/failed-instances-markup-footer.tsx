@@ -1,39 +1,45 @@
-import * as React from 'react';
 import { NamedFC } from 'common/react/named-fc';
-import styles from './failed-instances-markup-footer.scss';
+import * as React from 'react';
 import { CardInteractionSupport } from './card-interaction-support';
-import { FeedbackButtons } from './feedback-buttons';
 import { CopyContentButton } from './copy-content-button';
+import styles from './failed-instances-markup-footer.scss';
+import { FeedbackButtons } from './feedback-buttons';
 
-export type FeedbackFooterDeps = {
+export type MarkupFooterDeps = {
     cardInteractionSupport: CardInteractionSupport;
 };
 
-export interface FeedbackFooterProps {
-    deps: FeedbackFooterDeps;
+export interface MarkupFooterProps {
+    deps: MarkupFooterDeps;
     instanceId: string;
     feedbackURL?: string;
     contentToCopy?: string;
 }
 
-export const MarkupFooter = NamedFC<FeedbackFooterProps>(
+export const MarkupFooter = NamedFC<MarkupFooterProps>(
     'MarkupFooter',
     props => {
         const { deps, instanceId, feedbackURL, contentToCopy } = props;
+        const supportsCopy = deps.cardInteractionSupport.supportsCopyFailureDetailsInMarkup;
 
-        if (!deps.cardInteractionSupport.supportsCopyFailureDetailsInMarkup) {
+        // Return null early if both conditions fail
+        if (!feedbackURL && !supportsCopy) {
             return null;
         }
 
         return (
-            <div className={styles.feedbackFooter}>
-                <div className={styles.feedbackGroupLeft}>
-                    {feedbackURL && <FeedbackButtons feedbackURL={feedbackURL} instanceId={instanceId} />}
-                </div>
+            <div className={styles.markupFooter}>
+                {feedbackURL && (
+                    <div className={styles.buttonsGroupLeft}>
+                        <FeedbackButtons feedbackURL={feedbackURL} instanceId={instanceId} />
+                    </div>
+                )}
 
-                <div className={styles.feedbackGroupRight}>
-                    <CopyContentButton instanceId={instanceId} contentToCopy={contentToCopy} />
-                </div>
+                {supportsCopy && (
+                    <div className={styles.buttonsGroupRight}>
+                        <CopyContentButton instanceId={instanceId} contentToCopy={contentToCopy} />
+                    </div>
+                )}
             </div>
         );
     },
