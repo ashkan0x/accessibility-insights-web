@@ -79,6 +79,7 @@ export class FastPassReportHtmlGenerator {
             } as FastPassReportDeps,
             toUtcString: this.utcDateConverter,
             getCollapsibleScript: this.getCollapsibleScript,
+            getCopyToClipboardScript: () => '', // Adding the missing function
             getGuidanceTagsFromGuidanceLinks: this.getGuidanceTagsFromGuidanceLinks,
             fixInstructionProcessor: this.fixInstructionProcessor,
             recommendColor: this.recommendColor,

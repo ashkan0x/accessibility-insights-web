@@ -4,6 +4,7 @@ import { CombinedReportParameters } from 'accessibility-insights-report';
 
 export const combinedResultsWithIssues: CombinedReportParameters = {
     serviceName: 'Mock Service Name',
+    feedbackURL: 'https://example.com/feedback',
     axeVersion: 'mock.axe.version',
     scanDetails: {
         basePageTitle: 'Mock base without failures or unscannables',

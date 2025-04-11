@@ -6,6 +6,8 @@ import { AxeReportParameters, reporterFactory } from 'accessibility-insights-rep
 // TODO: Restore usage of prettier once the Node update feature is complete
 //import * as prettier from 'prettier';
 
+import * as fs from 'fs';
+
 import { axeResultsWithIssues } from './examples/axe-results-with-issues.input';
 import { axeResultsWithoutIssues } from './examples/axe-results-without-issues.input';
 
@@ -25,14 +27,20 @@ describe('fromAxeResult', () => {
         });
 
         it('produces pinned HTML file', async () => {
-            const output = reporterFactory().fromAxeResult(input).asHTML();
+            const output = reporterFactory()
+            const axe = output.fromAxeResult(input)
+            const html = axe.asHTML();
             // const formattedOutput = await prettier.format(output, {
             //     parser: 'html',
             //     htmlWhitespaceSensitivity: 'strict',
             // });
 
+            
+            // DEBUG html file, store the output for inspection
+            fs.writeFileSync(path.join(__dirname, 'examples', `${exampleName}-debug.html`), html);
+
             const snapshotFile = path.join(__dirname, 'examples', `${exampleName}.snap.html`);
-            expect(output).toMatchFile(snapshotFile);
+            expect(html).toMatchFile(snapshotFile);
         });
     });
 });

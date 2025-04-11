@@ -119,6 +119,7 @@ describe('CombinedReportHtmlGenerator', () => {
             toUtcString: getUTCStringFromDateStub,
             secondsToTimeString: getTimeStringFromSecondsStub,
             getCollapsibleScript: getScriptMock.object,
+            getCopyToClipboardScript: () => '',
             scanMetadata,
             cardsViewData,
             urlResultCounts,

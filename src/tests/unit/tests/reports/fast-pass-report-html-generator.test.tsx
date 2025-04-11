@@ -102,6 +102,7 @@ describe(FastPassReportHtmlGenerator, () => {
             description,
             toUtcString: getUTCStringFromDateStub,
             getCollapsibleScript: getScriptMock.object,
+            getCopyToClipboardScript: () => '',
             getGuidanceTagsFromGuidanceLinks: getGuidanceTagsStub,
             results: model.results,
             scanMetadata: expectedScanMetadata,

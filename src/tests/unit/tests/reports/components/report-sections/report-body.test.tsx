@@ -84,6 +84,7 @@ describe('ReportBody', () => {
             description: 'test description',
             toUtcString: () => '',
             getCollapsibleScript: getScriptStub,
+            getCopyToClipboardScript: () => '',
             getGuidanceTagsFromGuidanceLinks: getGuidanceTagsStub,
             cardsViewData: {
                 cards: exampleUnifiedStatusResults,

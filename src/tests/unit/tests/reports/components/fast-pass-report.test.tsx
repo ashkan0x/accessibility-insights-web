@@ -86,6 +86,7 @@ describe(FastPassReport.displayName, () => {
             description: 'test description',
             toUtcString: () => '',
             getCollapsibleScript: getScriptStub,
+            getCopyToClipboardScript: () => '',
             getGuidanceTagsFromGuidanceLinks: getGuidanceTagsStub,
             results: {
                 automatedChecks: {

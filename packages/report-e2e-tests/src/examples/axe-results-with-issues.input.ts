@@ -8,6 +8,7 @@ export const axeResultsWithIssues: AxeReportParameters = {
         pageTitle: 'Page Title for Axe Results With Issues',
     },
     serviceName: 'Service Name for Axe Results With Issues',
+    feedbackURL: "https://fffffffffftest.io.xyz/",
     results: {
         inapplicable: [
             {

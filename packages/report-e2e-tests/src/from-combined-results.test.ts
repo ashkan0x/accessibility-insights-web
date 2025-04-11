@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 import * as path from 'path';
+import * as fs from 'fs';
 import { resetIds } from '@fluentui/react';
 import { reporterFactory, CombinedReportParameters } from 'accessibility-insights-report';
 // TODO: Restore usage of prettier once the Node update feature is complete
@@ -32,6 +33,8 @@ describe('fromCombinedResults', () => {
             //     parser: 'html',
             //     htmlWhitespaceSensitivity: 'strict',
             // });
+
+            fs.writeFileSync(path.join(__dirname, 'examples', `${exampleName}----debug.html`), output);
 
             const snapshotFile = path.join(__dirname, 'examples', `${exampleName}.snap.html`);
             expect(output).toMatchFile(snapshotFile);
